@@ -1,0 +1,59 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "echo workspaceFolder",
+            "type": "shell",
+            "command": "echo ${workspaceFolder}",
+            "problemMatcher": [],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "build libnae",
+            "type": "shell",
+            "command": "bazel build //:libnae",
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+        }
+        ,
+        {
+            "label": "refresh compile_commands",
+            "type": "shell",
+            "command": "bazel run @hedron_compile_commands//:refresh_all",
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+        },
+        {
+            "label": "run tests",
+            "type": "shell",
+            "command": "bazel",
+            "args": [
+                "test",
+                "//tests:test_main",
+                "--test_verbose_timeout_warnings"
+            ],
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        }
+    ]
+}

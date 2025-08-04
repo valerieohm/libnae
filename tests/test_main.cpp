@@ -1,14 +1,13 @@
-#include <cassert>
-#include <iostream>
+#define BOOST_TEST_MODULE LibNaeTest
+#include <boost/test/included/unit_test.hpp>
 #include <node.h>
 
 using namespace nae;
-int main() {
-    std::cout << "Running tests..." << std::endl;
-    std::shared_ptr<Node> one = createNode("Node1");
-    printf("Created node: %s\n", one->getName().c_str());
 
-    assert(1 + 1 == 2);
-    std::cout << "All tests passed!" << std::endl;
-    return 0;
+BOOST_AUTO_TEST_CASE(node_creation)
+{
+    std::shared_ptr<Node> one = createNode("Node1");
+    BOOST_TEST(one != nullptr);
+    // Uncomment if getName() is implemented:
+    // BOOST_TEST(one->getName() == "Node1");
 }

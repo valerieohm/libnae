@@ -1,5 +1,5 @@
-#ifndef LIBNAE_H
-#define LIBNAE_H
+#ifndef TYPES_H
+#define TYPES_H
 
 #include <string>
 namespace nae {
@@ -27,31 +27,8 @@ namespace nae {
         if (str == "Unknown") return Type::Unknown;
         return Type::Undefined;
     }
-class Obj {
-public:
-    explicit Obj(Type) : type(Type::Undefined) {};
-    Obj(Type type, std::string const& name) : type(type), name(name) {}
-    
-    Type getType() const { return type; }
-    std::string getName() const { return name; }
-    void setName(std::string const& newName) { name = newName; }
-
-    virtual std::string toString() const {
-        return "Obj(type: " + typeToString(type) + ", name: " + name + ")";
-    }
-
-    virtual bool isValid() const {
-        return type != Type::Undefined && !name.empty();
-    }
-    virtual ~Obj() = 0;
-    private:
-    Type type;
-    std::string name;
-};
-
-
 
 } // namespaee nae
 
 
-#endif // LIBNAE_H
+#endif // TYPES_H

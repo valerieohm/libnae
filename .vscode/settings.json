@@ -69,6 +69,10 @@
         "streambuf": "cpp",
         "thread": "cpp",
         "typeinfo": "cpp",
-        "variant": "cpp"
-    }
+        "variant": "cpp",
+        "strstream": "cpp",
+        "source_location": "cpp",
+        "cfenv": "cpp"
+    },
+    "editor.fontFamily": "MesloLGS Nerd Font Mono"
 }

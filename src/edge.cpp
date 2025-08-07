@@ -12,20 +12,7 @@ Edge::Edge(std::shared_ptr<Obj> vertex_src, std::shared_ptr<Obj> vertex_dst,
     vertexes.push_back(vertex_src);
     vertexes.push_back(vertex_dst);
 
-  try {
-    auto s = std::dynamic_pointer_cast<Vertex>(vertex_src);
-    s->addEdge(shared_from_this());
-  } catch (const std::bad_cast &e) {
-    throw std::runtime_error("vertex_src is not a Vertex: " + std::string(e.what()));
-    // Handle the case where vertex_src is not a Vertex
-  }
-  try {
-    auto d = std::dynamic_pointer_cast<Vertex>(vertex_dst);
-    d->addEdge(shared_from_this());
-  } catch (const std::bad_cast &e) {
-    throw std::runtime_error("vertex_dst is not a Vertex: " + std::string(e.what()));
-    // Handle the case where vertex_dst is not a Vertex
-  }
+
 
 }
 
@@ -51,7 +38,11 @@ class EdgeImpl : public Edge {
 std::shared_ptr<Edge> createEdge(std::shared_ptr<Obj> vertex_src,
                                  std::shared_ptr<Obj> vertex_dst,
                                  std::string const& name) {
-    return std::make_shared<EdgeImpl>(vertex_src, vertex_dst, name);
-;
+    auto edge = std::make_shared<EdgeImpl>(vertex_src, vertex_dst, name);
+    auto s = std::dynamic_pointer_cast<Vertex>(vertex_src);
+    s->addEdge(edge);
+    auto d = std::dynamic_pointer_cast<Vertex>(vertex_dst);
+    d->addEdge(edge);
+    return edge;
 }
 }  // namespace nae

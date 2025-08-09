@@ -6,7 +6,7 @@ namespace nae {
 
     enum class Type {
         Undefined,
-        Node,
+        Vertex,
         Edge,
         Unknown
     };
@@ -14,7 +14,7 @@ namespace nae {
     inline std::string typeToString(Type type) {
         switch (type) {
             case Type::Undefined: return "Undefined";
-            case Type::Node: return "Node";
+            case Type::Vertex: return "Vertex";
             case Type::Edge: return "Edge";
             case Type::Unknown: return "Unknown";
             default: return "Invalid Type";
@@ -22,7 +22,7 @@ namespace nae {
     }
 
     inline Type stringToType(std::string const& str) {
-        if (str =="Node") return Type::Node;
+        if (str =="Vertex") return Type::Vertex;
         if (str == "Edge") return Type::Edge;
         if (str == "Unknown") return Type::Unknown;
         return Type::Undefined;

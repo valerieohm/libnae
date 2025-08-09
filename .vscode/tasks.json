@@ -14,46 +14,60 @@
             }
         },
         {
-            "label": "build libnae",
-            "type": "shell",
-            "command": "bazel build //:libnae",
-            "problemMatcher": [
-                "$gcc"
-            ],
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
-        }
-        ,
-        {
             "label": "refresh compile_commands",
-            "type": "shell",
-            "command": "bazel run @hedron_compile_commands//:refresh_all",
-            "problemMatcher": [
-                "$gcc"
-            ],
+            "type": "bazel",
+            "command": "run",
+            "targets": [
+                "@hedron_compile_commands//:refresh_all"],
             "group": {
                 "kind": "build",
                 "isDefault": true
             },
         },
         {
-            "label": "run tests",
-            "type": "shell",
-            "command": "bazel",
-            "args": [
-                "test",
-                "//tests:test_main",
-                "--test_verbose_timeout_warnings"
-            ],
-            "problemMatcher": [
-                "$gcc"
-            ],
+            "label": "Run bazel build",
+            "type" : "bazel",
+            "command": "build",
             "group": {
                 "kind": "build",
                 "isDefault": true
-            }
+            },
+            "targets": ["${input:cctargets}"],
+            "problemMatcher" :"$gcc"
+            
+        },
+                {
+            "label": "Build test binary",
+            "type" : "bazel",
+            "command": "build",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "targets": ["//tests:test_main"],
+            "problemMatcher" :"$gcc"
+            
+        },
+        {
+            "label": "Run tests",
+            "type" : "bazel",
+            "command": "test",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "targets": ["${input:cctargets}"],
         }
-    ]
+    ],
+    "inputs": [
+        {
+        "id": "cctargets",
+        "type": "command",
+        "command": "bazel.pickTarget",
+        "args": {
+            "query": "kind('cc_.*', //...:*)",
+            "placeHolder": "Build which target?",
+        },
+    },
+  ]
 }

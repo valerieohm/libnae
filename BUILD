@@ -2,9 +2,10 @@ load("@rules_cc//cc:cc_library.bzl", "cc_library")
 
 cc_library(
     name = "libnae",
-    srcs = ["src/vertex.cpp", "src/edge.cpp", "src/obj.cpp"],
-    hdrs = ["include/types.h", "include/obj.h", "include/edge.h", "include/vertex.h"],
+    srcs = glob(["src/*.cpp"]),
+    hdrs = glob(["include/*.h"]),
     includes = ["include"],
     visibility = ["//visibility:public"],
+    copts = ["-g", "-O0"],  # Add debug info and disable optimization
     linkstatic = 1,
 )

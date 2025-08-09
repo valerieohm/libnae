@@ -20,13 +20,16 @@ std::shared_ptr<Obj> Edge::getOtherVertex(std::shared_ptr<Obj> vertex) const {
     if (vertexes.size() != 2) {
         throw std::runtime_error("Edge must have exactly two vertexes.");
     }
-    if (vertex == vertexes[0]) {
-        return vertexes[1];
-    } else if (vertex == vertexes[1]) {
-        return vertexes[0];
-    } else {
-        throw std::runtime_error("Provided vertex is not part of this edge.");
+    auto vert = std::dynamic_pointer_cast<Vertex>(vertex);
+    if (!vert) {
+        throw std::runtime_error("Provided object is not a Vertex.");
     }
+    if (vertex == vertexes[0] || vertex == vertexes[1]) {
+        return (vertex == vertexes[0]) ? vertexes[1] : vertexes[0];
+    }
+    // If the vertex is not one of the two, throw an error
+    throw std::runtime_error("Provided vertex " + vertex->getName() + " is not part of edge " + getName() + ".");
+
 }
 class EdgeImpl : public Edge {
  public:

@@ -74,5 +74,7 @@
         "source_location": "cpp",
         "cfenv": "cpp"
     },
-    "editor.fontFamily": "MesloLGS Nerd Font Mono"
+//    "editor.fontFamily": "MesloLGS Nerd Font Mono",
+    "editor.fontFamily": "Ubuntu Sans Mono",
+    "C_Cpp.loggingLevel": "Information"
 }

@@ -1,5 +1,5 @@
-#include <obj.h>
-#include <vertex.h>
+#include <obj.hpp>
+#include <vertex.hpp>
 namespace nae {
 Vertex::~Vertex() {}
 

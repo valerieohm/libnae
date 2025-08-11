@@ -1,6 +1,5 @@
-#include <exceptions.h>
-#include <graph.h>
-#include <vertex.h>
+#include <graph.hpp>
+#include <vertex.hpp>
 
 #include <fstream>
 #include <iostream>

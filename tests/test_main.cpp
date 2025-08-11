@@ -1,7 +1,7 @@
 #define BOOST_TEST_MODULE LibNaeTest
-#include <edge.h>
-#include <vertex.h>
-#include <graph.h>
+#include <edge.hpp>
+#include <vertex.hpp>
+#include <graph.hpp>
 
 #include <boost/test/included/unit_test.hpp>
 #include <memory>
@@ -41,9 +41,17 @@ BOOST_AUTO_TEST_CASE(test02_basic_parse) {
                         std::ios::out);
   outfile << outstring;
   outfile.close();
-  std::string command("diff /home/vohm/dev/libnae/tests/twist.nae /tmp/test02_output.txt");
+  std::string sorted_infile = "/tmp/test02_sorted_in.txt";
+  std::string sorted_outfile = "/tmp/test02_sorted_out.txt";
+  std::string sort_in_cmd =
+      "sort /home/vohm/dev/libnae/tests/twist.nae > " + sorted_infile;
+  std::string sort_out_cmd = "sort /tmp/test02_output.txt > " + sorted_outfile;
+  int res1 = system(sort_in_cmd.c_str());
+  int res2 = system(sort_out_cmd.c_str());
+  BOOST_REQUIRE(res1 == 0);
+  BOOST_REQUIRE(res2 == 0);
+  std::string command("diff " + sorted_infile + " " + sorted_outfile);
   int res = system(command.c_str());
-  BOOST_REQUIRE(res == 0); // Check if the files are identical
-
+  BOOST_REQUIRE(res == 0); // Check if the sorted files are identical
 }
 

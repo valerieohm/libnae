@@ -3,7 +3,7 @@
 #include <memory>
 #include <vector>
 
-#include <obj.h>
+#include <obj.hpp>
 namespace nae {
 class Vertex : public Obj, public std::enable_shared_from_this<Vertex> {
     public:

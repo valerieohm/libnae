@@ -1,7 +1,7 @@
 #ifndef OBJ_H
 #define OBJ_H
 
-#include <types.h>
+#include <types.hpp>
 
 namespace nae {
     class Obj {

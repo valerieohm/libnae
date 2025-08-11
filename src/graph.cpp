@@ -1,4 +1,4 @@
-#include <graph.h>
+#include <graph.hpp>
 
 #include <fstream>
 #include <memory>
@@ -13,7 +13,7 @@ std::shared_ptr<Graph> createGraph(std::string const &infile_name) {
 
 std::shared_ptr<Vertex> Graph::addVertex(std::string const &name) {
   auto v = createVertex(name);
-  vmap_.insert(name, v);
+  vmap_.emplace(name, v);
   return v;
 }
 std::shared_ptr<Edge> Graph::addEdge(std::string const &src,
@@ -22,7 +22,7 @@ std::shared_ptr<Edge> Graph::addEdge(std::string const &src,
   auto srcv = findVertex(src);
   auto dstv = findVertex(dst);
   auto e = createEdge(srcv, dstv, name);
-  emap_.insert(name, e);
+  emap_.emplace(name, e);
   return e;
 }
 
@@ -46,14 +46,14 @@ std::string Graph::unparse() {
   std::ostringstream oss;
   oss << "#NAE_0.1\n";
   oss << "#VERTICIES\n";
-  for (size_t i = 0; i < vmap_.size(); ++i) {
-    oss << vmap_.atOrder(i)->getName() << "\n";
+  for (const auto &pair : vmap_) {
+    oss << pair.second->getName() << "\n";
   }
   oss << "#EDGES\n";
-  for (size_t i = 0; i < emap_.size(); ++i) {
-    auto edge = emap_.atOrder(i);
-    oss << edge->getName() << " " << edge->getSource()->getName() <<
-        " - "<< edge->getDestination()->getName() << "\n";
+  for (const auto &pair : emap_) {
+    auto edge = pair.second;
+    oss << edge->getName() << " " << edge->getSrc()->getName() << " - "
+        << edge->getDst()->getName() << "\n";
   }
   return oss.str();
 }

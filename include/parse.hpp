@@ -1,8 +1,8 @@
 #ifndef PARSE_H
 #define PARSE_H
 
-#include <vertex.h>
-#include <edge.h>
+#include <vertex.hpp>
+#include <edge.hpp>
 #include <string>
 namespace nae {
 

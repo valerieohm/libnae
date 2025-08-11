@@ -16,21 +16,19 @@ Edge::Edge(std::shared_ptr<Obj> vertex_src, std::shared_ptr<Obj> vertex_dst,
 std::shared_ptr<Obj> Edge::getOther(std::shared_ptr<Obj> vertex) const {
     auto vert = std::dynamic_pointer_cast<Vertex>(vertex);
     if (!vert) {
-        throw std::runtime_error("Provided object is not a Vertex.");
+      throw std::runtime_error("getOther(std::shared_ptr<Obj>) null obj");
     }
     if (vertex == src) return dst;
     if (vertex == dst) return src;
     // If the vertex is not one of the two, throw an error
-    throw std::runtime_error("Provided vertex " + vertex->getName() +
-                             " is not part of edge " + getName() + ".");
+    throw std::runtime_error("getOther(std::shared_ptr<Obj>) mismatch");
     return nullptr;
 }
 
 std::shared_ptr<Obj> Edge::getOther(std::string const & vertex_name) const {
     if (src->getName() == vertex_name) return dst;
     if (dst->getName() == vertex_name) return src;
-    throw std::runtime_error("Provided vertex name " + vertex_name +
-                             " is not part of edge " + getName() + ".");
+    throw std::runtime_error("getOther(std::string) mismatch");
     return nullptr;
 }
 

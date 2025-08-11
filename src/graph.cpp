@@ -29,13 +29,14 @@ std::shared_ptr<Edge> Graph::addEdge(std::string const &src,
 std::shared_ptr<Vertex> Graph::findVertex(std::string const &name) {
   if (auto search = vmap_.find(name); search != vmap_.end())
     return search->second;
+  throw std::runtime_error("findVertex(std::string) failed");
   return nullptr;
 }
 
 std::shared_ptr<Edge> Graph::findEdge(std::string const &name) {
   if (auto search = emap_.find(name); search != emap_.end())
     return search->second;
-  return nullptr;
+  throw std::runtime_error("findEdge(std::string) failed");
 }
 bool Graph::parse() {
   std::shared_ptr<Graph> self = shared_from_this();

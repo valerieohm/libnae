@@ -39,12 +39,14 @@ class Graph : public std::enable_shared_from_this<Graph> {
   std::shared_ptr<Vertex> addVertex(std::string const &name);
   std::shared_ptr<Edge> addEdge(std::string const &src, std::string const &dst,
                                 std::string const &name);
-  std::shared_ptr<Vertex> findVertex(std::string const &name);
   std::shared_ptr<Edge> findEdge(std::string const &name);
 
- private:
-   std::unordered_map<std::string, std::shared_ptr<Vertex>> vmap_;
-   std::unordered_map<std::string, std::shared_ptr<Edge>> emap_;
+public:
+  std::shared_ptr<Vertex> findVertex(std::string const &name);
+
+private:
+  std::unordered_map<std::string, std::shared_ptr<Vertex>> vmap_;
+  std::unordered_map<std::string, std::shared_ptr<Edge>> emap_;
 };
 std::shared_ptr<Graph> createGraph(std::string const &infile_name);
 }  // namespace nae

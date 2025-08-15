@@ -30,6 +30,21 @@ public:
     std::string unparse();
     std::string const &getInputString() { return parser.getInputString(); }
     bool fileToString() { return parser.fileToString(); }
+    size_t getVertexCount() const { return vmap_.size(); }
+    size_t getEdgeCount() const { return emap_.size(); }
+
+    // Iterator support for vertices
+    using VertexIterator =
+        std::unordered_map<std::string,
+                           std::shared_ptr<Vertex>>::const_iterator;
+    VertexIterator vertexBegin() const { return vmap_.cbegin(); }
+    VertexIterator vertexEnd() const { return vmap_.cend(); }
+
+    // Iterator support for edges
+    using EdgeIterator =
+        std::unordered_map<std::string, std::shared_ptr<Edge>>::const_iterator;
+    EdgeIterator edgeBegin() const { return emap_.cbegin(); }
+    EdgeIterator edgeEnd() const { return emap_.cend(); }
 
 private:
     Parser parser;

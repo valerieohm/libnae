@@ -79,5 +79,6 @@
   },
   //    "editor.fontFamily": "MesloLGS Nerd Font Mono",
   "editor.fontFamily": "Ubuntu Sans Mono",
-  "C_Cpp.loggingLevel": "Information"
+  "C_Cpp.loggingLevel": "Information",
+  "editor.inlineSuggest.enabled": false
 }

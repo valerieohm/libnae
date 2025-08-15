@@ -43,6 +43,23 @@ void Edge::swap() {
     std::swap(src, dst);
 }
 
+std::string Edge::toString() const {
+    std::string result = "Edge name: " + getName() + " s:" + src->getName();
+    if (directed)
+        result += " > ";
+    else
+        result += " - ";
+
+    result +=
+        "d:" + dst->getName() + " userIntField:" + std::to_string(userIntField);
+    if (userObjField != nullptr) {
+        result += " userObjectField:" + userObjField->getName();
+    } else {
+        result += " userObjectField: null";
+    }
+    return result;
+}
+
 class EdgeImpl : public Edge {
  public:
   EdgeImpl(std::shared_ptr<Obj> vertex_src, std::shared_ptr<Obj> vertex_dst,

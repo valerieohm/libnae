@@ -18,6 +18,7 @@ public:
     void setDirected(bool swap);
     void unsetDirected() { directed = false; }
     void swap();
+    virtual std::string toString() const override;
 
 private:
     Edge() = delete; // Prevent default constructor

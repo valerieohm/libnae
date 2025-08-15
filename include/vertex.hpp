@@ -7,19 +7,24 @@
 namespace nae {
 class Vertex : public Obj, public std::enable_shared_from_this<Vertex> {
 public:
-    explicit Vertex(std::string const &name)
-        : Obj(Type::Vertex, name), distance(INT64_MAX) {}
+    explicit Vertex(std::string const &name) : Obj(Type::Vertex, name) {
+        userIntField = INT64_MAX;
+    }
     void addEdge(std::shared_ptr<Obj> edge) { edges.push_back(edge); }
     std::vector<std::shared_ptr<Obj>> getEdges() const { return edges; }
     virtual ~Vertex();
 
 public:
-    int64_t getDistance() const { return distance; }
-    void setDistance(int64_t dist) { distance = dist; }
-    void resetDistance() { distance = INT64_MAX; }
+    int64_t getDistance() const { return getUserIntField(); }
+    void setDistance(int64_t dist) { setUserIntField(dist); }
+    void resetDistance() { setUserIntField(INT64_MAX); }
+    std::shared_ptr<Vertex> getPrevious();
+    void setPrevious(std::shared_ptr<Vertex> vertex) {
+        setUserObjectField(vertex);
+    }
+    void resetPrevious() { return setPrevious(nullptr); }
 
 private:
-    int64_t distance;
     std::vector<std::shared_ptr<Obj>> edges;
     Vertex() = delete; // Prevent default constructor
 };

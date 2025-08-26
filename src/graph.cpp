@@ -45,17 +45,38 @@ bool Graph::parse() {
 
 std::string Graph::unparse() {
   std::ostringstream oss;
-  oss << "#NAE_0.1\n";
-  oss << "#VERTICIES\n";
+  oss << "graph G {\n";
+
+  // Output vertices with attributes
   for (const auto &pair : vmap_) {
-    oss << pair.second->getName() << " " << pair.second->getCost() << "\n";
+      auto vertex = pair.second;
+      oss << "    " << vertex->getName() << " [cost=" << vertex->getCost();
+
+      // Add position if available
+      std::string pos = vertex->getUserStringField();
+      if (!pos.empty()) {
+          oss << ", pos=\"" << pos << "!\"";
+      }
+
+      oss << "]\n";
   }
-  oss << "#EDGES\n";
+
+  oss << "\n";
+
+  // Output edges with attributes
   for (const auto &pair : emap_) {
-    auto edge = pair.second;
-    oss << edge->getName() << " " << edge->getSrc()->getName() << " - "
-        << edge->getDst()->getName() << " " << edge->getCost() << "\n";
+      auto edge = pair.second;
+      auto src = std::dynamic_pointer_cast<Vertex>(edge->getSrc());
+      auto dst = std::dynamic_pointer_cast<Vertex>(edge->getDst());
+
+      if (src && dst) {
+          oss << "    " << src->getName() << " -- " << dst->getName();
+          oss << " [label=\"" << edge->getName()
+              << "\", cost=" << edge->getCost() << "]\n";
+      }
   }
+
+  oss << "}\n";
   return oss.str();
 }
 }  // namespace nae

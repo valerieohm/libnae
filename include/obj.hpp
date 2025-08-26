@@ -2,6 +2,7 @@
 #define OBJ_H
 #include <climits>
 #include <memory>
+#include <string>
 #include <types.hpp>
 
 namespace nae {
@@ -18,8 +19,15 @@ public:
     void setCost(int64_t newCost) { cost = newCost; }
     int64_t getCost() const { return cost; }
 
-    void setUserIntField(int64_t field) { userIntField = field; }
+    // Existing user int field methods
     int64_t getUserIntField() const { return userIntField; }
+    void setUserIntField(int64_t value) { userIntField = value; }
+
+    // Add user string field methods
+    std::string getUserStringField() const { return userStringField; }
+    void setUserStringField(const std::string &value) {
+        userStringField = value;
+    }
 
     void setUserObjectField(std::shared_ptr<Obj> obj) { userObjField = obj; }
     std::shared_ptr<Obj> getUserObjectField() const { return userObjField; }
@@ -46,8 +54,9 @@ private:
     std::string name;
 
 protected:
-    int64_t userIntField = 0;                    // Default user field
-    std::shared_ptr<Obj> userObjField = nullptr; // Default user object field
+    int64_t userIntField = 0;
+    std::string userStringField;
+    std::shared_ptr<Obj> userObjField = nullptr;
 };
 } // namespace nae
 

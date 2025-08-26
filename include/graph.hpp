@@ -19,6 +19,7 @@ public:
     private:
         Parser() = delete;
         bool parse(std::shared_ptr<Graph> graph);
+        bool parseDOT(std::shared_ptr<Graph> graph, std::istringstream &iss);
         friend Graph;
         bool fileToString();
         std::string const &getInputString();

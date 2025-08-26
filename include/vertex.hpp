@@ -7,7 +7,7 @@
 namespace nae {
 class Vertex : public Obj, public std::enable_shared_from_this<Vertex> {
 public:
-    explicit Vertex(std::string const &name) : Obj(Type::Vertex, name) {
+    explicit Vertex(std::string const &name, int cost) : Obj(Type::Vertex, name, cost) {
         userIntField = INT64_MAX;
     }
     void addEdge(std::shared_ptr<Obj> edge) { edges.push_back(edge); }
@@ -29,7 +29,7 @@ private:
     Vertex() = delete; // Prevent default constructor
 };
 
-std::shared_ptr<Vertex> createVertex(std::string const &name);
+std::shared_ptr<Vertex> createVertex(std::string const &name, int cost);
 } // namespace nae
 
 #endif // VERTEX_H

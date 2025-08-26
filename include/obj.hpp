@@ -8,15 +8,15 @@ namespace nae {
 class Obj {
 public:
     explicit Obj(Type) : type(Type::Undefined) {};
-    Obj(Type type, std::string const &name)
-        : type(type), weight(LONG_MAX), name(name) {}
+    Obj(Type type, std::string const &name, int cost)
+        : type(type), cost(cost), name(name) {}
 
     Type getType() const { return type; }
     const std::string &getName() const { return name; }
     void setName(std::string const &newName) { name = newName; }
 
-    void setWeight(int64_t newWeight) { weight = newWeight; }
-    int64_t getWeight() const { return weight; }
+    void setCost(int64_t newCost) { cost = newCost; }
+    int64_t getCost() const { return cost; }
 
     void setUserIntField(int64_t field) { userIntField = field; }
     int64_t getUserIntField() const { return userIntField; }
@@ -26,14 +26,12 @@ public:
 
     virtual std::string toString() const {
         std::string result =
-            "Obj(type: " + typeToString(type) + ", name: " + name;
-        result += ", userIntField: " + std::to_string(userIntField);
-        if (userObjField != nullptr) {
-            result += ", userObjectField: " + userObjField->getName();
-        } else {
-            result += ", userObjectField: null";
-        }
-        result += ")";
+            "Obj(" + typeToString(type) + ") " + name +
+            " cost=" + std::to_string(cost) +
+            " user=" + std::to_string(userIntField) + " " +
+            std::to_string(userIntField) + " " +
+            (userObjField ? userObjField->getName() : std::string("null"));
+
         return result;
     }
 
@@ -44,7 +42,7 @@ public:
 
 private:
     Type type;
-    int64_t weight = INT64_MAX; // Default weight
+    int64_t cost; 
     std::string name;
 
 protected:

@@ -15,10 +15,10 @@ std::shared_ptr<Vertex> Vertex::getPrevious() {
 
 class VertexImpl : public Vertex {
  public:
-  VertexImpl(std::string const &name) : Vertex(name) {}
+  VertexImpl(std::string const &name, int cost) : Vertex(name, cost) {}
 };
 
-std::shared_ptr<Vertex> createVertex(std::string const &name) {
-  return std::make_shared<VertexImpl>(name);
+std::shared_ptr<Vertex> createVertex(std::string const &name, int cost) {
+  return std::make_shared<VertexImpl>(name, cost);
 }
 }  // namespace nae

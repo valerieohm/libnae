@@ -7,6 +7,17 @@
 
 namespace nae {
 
+namespace {
+std::vector<std::string> tokenize(std::string const &line) {
+    std::vector<std::string> tokens;
+    std::string buffer;
+    std::stringstream check1(line);
+    while (getline(check1, buffer, ' '))
+        tokens.push_back(buffer);
+    return tokens;
+}
+} // namespace
+
 Graph::Parser::Parser(std::string const& infile) : infile_path(infile) {}
 bool Graph::Parser::parse(std::shared_ptr<Graph> graph) {
   if (input_string.empty() && !fileToString())
@@ -22,23 +33,22 @@ bool Graph::Parser::parse(std::shared_ptr<Graph> graph) {
   if (line != "#VERTICIES")
     throw std::runtime_error("Graph::Parser::parse() invalid VERTICIES");
   while (std::getline(iss, line)) {
-    if (!line.starts_with('#'))
-      graph->addVertex(line);
-    else
+    if (!line.starts_with('#')){
+      auto tokens = tokenize(line);
+      if (tokens.size() != 2) throw std::runtime_error("vertex line wrong number of tokens");
+      graph->addVertex(tokens[0], stoi(tokens[1]));
+    }else
       break;
   }
   if (line != "#EDGES")
     throw std::runtime_error("Graph::Parser::parse() invalid EDGES");
   while (std::getline(iss, line)) {
     std::cout << "Line: |" << line << "|" << std::endl;
-    std::string buffer;
-    std::vector<std::string> tokens;
-    std::stringstream check1(line);
-    while (getline(check1, buffer, ' ')) tokens.push_back(buffer);
-    if (tokens.size() != 4)
+    auto tokens = tokenize(line);
+    if (tokens.size() != 5)
       throw std::runtime_error("Graph::Parser::parse() wrong tokens");
     // make an edge here
-    graph->addEdge(tokens[1], tokens[3], tokens[0]);
+    graph->addEdge(tokens[1], tokens[3], tokens[0], stoi(tokens[4]));
   }
   return true;
 }
@@ -61,4 +71,4 @@ std::string const& Graph::Parser::getInputString() {
   return input_string;
 }
 
-}  // namespace nae
+} // namespace nae

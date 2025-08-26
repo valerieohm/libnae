@@ -5,6 +5,7 @@
 
 #include <memory>
 #include <unordered_map>
+#include <functional>
 
 namespace nae {
 
@@ -46,12 +47,27 @@ public:
     EdgeIterator edgeBegin() const { return emap_.cbegin(); }
     EdgeIterator edgeEnd() const { return emap_.cend(); }
 
+    // Apply function to all vertices
+    template<typename Func>
+    void forEachVertex(Func func) {
+        for (auto& pair : vmap_) {
+            func(pair.second);
+        }
+    }
+
+    // Apply function to all edges
+    template<typename Func>
+    void forEachEdge(Func func) {
+        for (auto& pair : emap_) {
+            func(pair.second);
+        }
+    }
 private:
     Parser parser;
-    std::shared_ptr<Vertex> addVertex(std::string const &name);
+    std::shared_ptr<Vertex> addVertex(std::string const &name, int cost);
     std::shared_ptr<Edge> addEdge(std::string const &src,
                                   std::string const &dst,
-                                  std::string const &name);
+                                  std::string const &name, int cost);
     std::shared_ptr<Edge> findEdge(std::string const &name);
 
 public:

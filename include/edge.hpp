@@ -8,7 +8,7 @@ namespace nae {
 class Edge : public Obj, public std::enable_shared_from_this<Edge> {
 public:
     Edge(std::shared_ptr<Obj> vertex_src, std::shared_ptr<Obj> vertex_dst,
-         std::string const &name, bool directed = false);
+         std::string const &name, bool directed, int cost);
     std::shared_ptr<Obj> getOther(std::shared_ptr<Obj> vertex) const;
     std::shared_ptr<Obj> getOther(std::string const &vertex_name) const;
     virtual ~Edge();
@@ -24,7 +24,6 @@ private:
     Edge() = delete; // Prevent default constructor
 
     bool directed;
-    int weight = 1;
     int used = 0;
     std::shared_ptr<Obj> src;
     std::shared_ptr<Obj> dst;
@@ -33,7 +32,7 @@ private:
 std::shared_ptr<Edge> createEdge(std::shared_ptr<Obj> vertex_src,
                                  std::shared_ptr<Obj> vertex_dst,
                                  std::string const &name,
-                                 bool directed = false);
+                                 bool directed, int cost);
 } // namespace nae
 
 #endif // EDGE_H

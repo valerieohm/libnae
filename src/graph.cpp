@@ -11,17 +11,17 @@ std::shared_ptr<Graph> createGraph(std::string const &infile_name) {
   return std::make_shared<Graph>(infile_name);
 }
 
-std::shared_ptr<Vertex> Graph::addVertex(std::string const &name) {
-  auto v = createVertex(name);
+std::shared_ptr<Vertex> Graph::addVertex(std::string const &name, int cost) {
+  auto v = createVertex(name,cost);
   vmap_.emplace(name, v);
   return v;
 }
 std::shared_ptr<Edge> Graph::addEdge(std::string const &src,
                                      std::string const &dst,
-                                     std::string const &name) {
+                                     std::string const &name, int cost) {
   auto srcv = findVertex(src);
   auto dstv = findVertex(dst);
-  auto e = createEdge(srcv, dstv, name);
+  auto e = createEdge(srcv, dstv, name, false, cost);
   emap_.emplace(name, e);
   return e;
 }
@@ -48,13 +48,13 @@ std::string Graph::unparse() {
   oss << "#NAE_0.1\n";
   oss << "#VERTICIES\n";
   for (const auto &pair : vmap_) {
-    oss << pair.second->getName() << "\n";
+    oss << pair.second->getName() << " " << pair.second->getCost() << "\n";
   }
   oss << "#EDGES\n";
   for (const auto &pair : emap_) {
     auto edge = pair.second;
     oss << edge->getName() << " " << edge->getSrc()->getName() << " - "
-        << edge->getDst()->getName() << "\n";
+        << edge->getDst()->getName() << " " << edge->getCost() << "\n";
   }
   return oss.str();
 }
